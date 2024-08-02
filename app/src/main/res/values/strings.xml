@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Code to Image</string>
+    <string name="bg_color">BG Color</string>
+    <string name="label">Enter your code here.</string>
+    <string name="reset">Reset</string>
+    <string name="bg_color_editor">Editor Color</string>
+    <string name="clear_text">Clear Text</string>
+    <string name="share">Share</string>
+    <string name="developer_info">Developer Info</string>
+    <string name="faq">FAQ</string>
+    <string name="terms_amp_conditions">Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="know_more_more_about_this_application">know more more about this application</string>
+    <string name="close">Close</string>
+    <string name="send_email">Send Email</string>
+    <string name="quit">Quit App</string>
+    <string name="want_to_exit_application">Want to close App?</string>
+    <string name="font">Font</string>
+</resources>

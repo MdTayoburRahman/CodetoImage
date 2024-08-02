@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/privacy"
+        android:icon="@drawable/ic_baseline_privacy_tip_24"
+        android:title="@string/privacy_policy" />
+
+    <item
+        android:id="@+id/terms_condition"
+        android:icon="@drawable/ic_baseline_privacy_tip_24"
+        android:title="@string/terms_amp_conditions" />
+
+    <item
+        android:id="@+id/faq"
+        android:icon="@drawable/ic_baseline_about"
+        android:title="@string/faq" />
+
+    <item
+        android:id="@+id/about"
+        android:contentDescription="@string/know_more_more_about_this_application"
+        android:icon="@drawable/ic_baseline_about"
+        android:title="@string/developer_info"
+        app:showAsAction="never" />
+
+
+</menu>
