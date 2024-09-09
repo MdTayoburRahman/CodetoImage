@@ -55,17 +55,24 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("io.github.amrdeveloper:codeview:1.3.9")
-    implementation ("com.github.yukuku:ambilwarna:2.0.1")
-    implementation ("androidx.browser:browser:1.8.0")
+    implementation(libs.codeview)
+    implementation (libs.ambilwarna)
+    implementation (libs.browser)
 
     //for in-app update
-    implementation("com.google.android.play:asset-delivery:2.2.2")
-    implementation("com.google.android.play:feature-delivery:2.1.0")
-    implementation("com.google.android.play:review:2.0.1")
-    implementation("com.google.android.play:app-update:2.1.0")
+    implementation(libs.asset.delivery)
+    implementation(libs.feature.delivery)
+    implementation(libs.review)
+    implementation(libs.app.update)
     //permission
-    implementation("com.guolindev.permissionx:permissionx:1.8.0")
+    implementation(libs.permissionx)
+
+    //glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+    //lottie animation
+    implementation (libs.lottie)
 
 
 }

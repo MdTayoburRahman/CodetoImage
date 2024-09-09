@@ -16,4 +16,5 @@
     <string name="quit">Quit App</string>
     <string name="want_to_exit_application">Want to close App?</string>
     <string name="font">Font</string>
+    <string name="reset_color_pattern">Reset Pattern</string>
 </resources>

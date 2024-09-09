@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
     <files-path name="images" path="." />
+    <!-- Grant access to the app-specific external files directory -->
+    <external-files-path name="images" path="." />
+
+    <!-- Grant access to the DCIM directory (where the image is stored) -->
+    <external-path name="dcim" path="DCIM/" />
 </paths>

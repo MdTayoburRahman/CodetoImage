@@ -1,5 +1,8 @@
 package com.mdtayoburrahman.codetoimage.Activitys;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -8,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -24,8 +28,6 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.amrdeveloper.codeview.CodeView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,6 +36,7 @@ import com.mdtayoburrahman.codetoimage.Utils.AppUtils;
 import com.mdtayoburrahman.codetoimage.Utils.CodeViewSetupUtils;
 import com.mdtayoburrahman.codetoimage.Utils.ImageSaveUtils;
 import com.mdtayoburrahman.codetoimage.Utils.ImageShareUtils;
+import com.mdtayoburrahman.codetoimage.Utils.UpdateChecker;
 import com.mdtayoburrahman.codetoimage.databinding.ActivityMainBinding;
 import com.mdtayoburrahman.codetoimage.databinding.ExitAlertBinding;
 
@@ -51,6 +54,8 @@ public class MainActivity extends BaseActivity {
     private CodeViewSetupUtils codeViewSetupUtils;
     private AlertDialog alertDialog;
     private AlertDialog exitDialog;
+    private AutoCompleteTextView dropdownMenu;
+    private String selectedItem ="Java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,7 @@ public class MainActivity extends BaseActivity {
         setContentView(binding.getRoot());
         myAnim = AnimationUtils.loadAnimation(this, R.anim.click_anim);
         codeViewSetupUtils = new CodeViewSetupUtils(MainActivity.this);
+        dropdownMenu = findViewById(R.id.dropdown_menu);
         codeViews = binding.codeView;
         codeViews.setMovementMethod(new ScrollingMovementMethod());
         codeViewSetupUtils.codeViewSetupForJava(codeViews); // initialize data
@@ -68,11 +74,17 @@ public class MainActivity extends BaseActivity {
         setupLanguageList();
         setupTextSize();
         backPressed();
+        UpdateChecker.checkForUpdates(MainActivity.this);
+        UpdateChecker.checkForReview(MainActivity.this);
     }
 
     private void topAppBar() {
 
         binding.materialToolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.saved_item){
+                animateMenuItemAndIntent(item);
+                return true;
+            }
             if (item.getItemId() == R.id.about) {
                 showAboutAlert(MainActivity.this);
                 return true;
@@ -99,12 +111,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupLanguageList(){
-        List<String> languages = List.of("Java", "Python", "JavaScript", "C#", "HTML", "Ruby", "Swift", "PHP", "SQL", "Kotlin", "Go", "Rust", "CSS");
+        List<String> languages = List.of("Java", "Python", "JavaScript", "C#", "HTML", "Ruby", "Swift", "PHP", "SQL", "Kotlin", "Go", "Rust", "CSS","JSON","XML","YAML");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item, languages);
-        AutoCompleteTextView dropdownMenu = findViewById(R.id.dropdown_menu);
         dropdownMenu.setAdapter(adapter);
         dropdownMenu.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedItem = adapter.getItem(position);
+            selectedItem = adapter.getItem(position);
            switch (selectedItem){
                case "Java":{
                    codeViews.resetHighlighter();
@@ -183,6 +194,23 @@ public class MainActivity extends BaseActivity {
                    codeViews.resetSyntaxPatternList();
                    codeViewSetupUtils.codeViewSetupCSS(codeViews);
                    break;
+               }case "JSON": {
+                   codeViews.resetHighlighter();
+                   codeViews.resetSyntaxPatternList();
+                   codeViewSetupUtils.codeViewSetupJSON(codeViews);
+                   break;
+               }
+               case "XML": {
+                   codeViews.resetHighlighter();
+                   codeViews.resetSyntaxPatternList();
+                   codeViewSetupUtils.codeViewSetupXML(codeViews);
+                   break;
+               }
+               case "YAML": {
+                   codeViews.resetHighlighter();
+                   codeViews.resetSyntaxPatternList();
+                   codeViewSetupUtils.codeViewSetupYAML(codeViews);
+                   break;
                }
                default:
                    codeViews.resetHighlighter();
@@ -196,6 +224,7 @@ public class MainActivity extends BaseActivity {
 
 
     }
+
     private void setupTextSize(){
         binding.textSizeSlider.addOnChangeListener((slider, value, fromUser) -> {
             // Do something with the slider value
@@ -204,19 +233,23 @@ public class MainActivity extends BaseActivity {
         });
 
     }
+
     private void ButtonTask() {
         binding.changeBgColorButton.setOnClickListener(v -> {
             v.startAnimation(myAnim);
             changeBgColor();
         });
+
         binding.changeEditorBgColorButton.setOnClickListener(v -> {
             v.startAnimation(myAnim);
             changeEditorBgColor();
         });
+
         binding.pastTextButton.setOnClickListener(v -> {
             v.startAnimation(myAnim);
             pasteFromClipboard(codeViews);
         });
+
         binding.saveImageButton.setOnClickListener(v -> {
             v.startAnimation(myAnim);
             ImageSaveUtils saveUtils = new ImageSaveUtils(MainActivity.this);
@@ -253,7 +286,120 @@ public class MainActivity extends BaseActivity {
             codeViews.resetSyntaxPatternList();
             codeViewSetupUtils.codeViewSetupForJava(codeViews);
             setupLanguageList();
-            binding.editorLayer.setBackgroundColor(getColor(R.color.darkGrey));
+            binding.editorLayer.setBackgroundColor(getColor(R.color.orange));
+        });
+
+        binding.resetPattern.setOnClickListener(v -> {
+            v.startAnimation(myAnim);
+            codeViews.resetHighlighter();
+            codeViews.resetSyntaxPatternList();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                codeViews.resetPivot();
+            }
+            codeViews.clearMatches();
+            switch (selectedItem){
+                case "Java":{
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForJava(codeViews);
+                    break;
+                }
+                case "Python":{
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForPython(codeViews);
+                    break;
+                }
+                case "JavaScript":{
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForJavaScript(codeViews);
+                    break;
+                }
+                case "C#":{
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupCSharp(codeViews);
+                    break;
+                }
+                case "HTML": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForHtml(codeViews);
+                    break;
+                }
+                case "Ruby":{
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForRuby(codeViews);
+                    break;
+                }
+                case "Swift": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupSwift(codeViews);
+                    break;
+                }
+                case "PHP": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupPHP(codeViews);
+                    break;
+                }
+                case "SQL": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupSQL(codeViews);
+                    break;
+                }
+                case "Kotlin": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupKotlin(codeViews);
+                    break;
+                }
+                case "Go": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupGo(codeViews);
+                    break;
+                }
+                case "Rust": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupRust(codeViews);
+                    break;
+                }
+                case "CSS": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupCSS(codeViews);
+                    break;
+                }case "JSON": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupJSON(codeViews);
+                    break;
+                }
+                case "XML": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupXML(codeViews);
+                    break;
+                }
+                case "YAML": {
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupYAML(codeViews);
+                    break;
+                }
+                default:
+                    codeViews.resetHighlighter();
+                    codeViews.resetSyntaxPatternList();
+                    codeViewSetupUtils.codeViewSetupForJava(codeViews);
+                    break;
+
+            }
 
 
         });
@@ -269,12 +415,13 @@ public class MainActivity extends BaseActivity {
             ImageShareUtils imageShareUtils = new ImageShareUtils(MainActivity.this);
             Bitmap bitmap = imageShareUtils.createBitmapFromLayout(binding.ImageOutputLayout);
             if (bitmap!=null){
-                imageShareUtils.shareImageBitmap(bitmap);
+                imageShareUtils.shareImageFromBitmap(bitmap);
             }
         });
     }
+
     private void changeBgColor(){
-        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, getColor(R.color.purple_500), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, getColor(R.color.orange), new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
                 Log.d(TAG, "onCancel: no color piked");
@@ -288,8 +435,9 @@ public class MainActivity extends BaseActivity {
         });
         ambilWarnaDialog.show();
     }
+
     private void changeEditorBgColor(){
-        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, getColor(R.color.darkGrey), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, getColor(R.color.orange), new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
                 Log.d(TAG, "onCancel: no color piked");
@@ -303,6 +451,7 @@ public class MainActivity extends BaseActivity {
         });
         ambilWarnaDialog.show();
     }
+
     private void pasteFromClipboard(CodeView codeView){
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
@@ -367,7 +516,7 @@ public class MainActivity extends BaseActivity {
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                //TODO
+
                 try {
                     showExitAlert();
                 } catch (Exception e) {
@@ -376,6 +525,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     private void showExitAlert() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -399,5 +549,41 @@ public class MainActivity extends BaseActivity {
         builder.setCancelable(true);
         exitDialog = builder.create();
         exitDialog.show();
+    }
+
+    private void animateMenuItemAndIntent(MenuItem item) {
+        // Find the View of the MenuItem
+        View menuItemView = findViewById(item.getItemId());
+
+        if (menuItemView != null) {
+            // Animate the menu item
+            ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1.0f, 1.5f);
+            ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1.0f, 1.5f);
+            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1.5f, 1.0f);
+            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1.5f, 1.0f);
+
+            scaleUpX.setDuration(150);
+            scaleUpY.setDuration(150);
+            scaleDownX.setDuration(150);
+            scaleDownY.setDuration(150);
+
+            scaleUpX.start();
+            scaleUpY.start();
+            scaleUpX.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    scaleDownX.start();
+                    scaleDownY.start();
+                }
+            });
+
+            // Navigate to the next activity after the animation
+            scaleDownY.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    startActivity(new Intent(MainActivity.this, SavedImageActivity.class));
+                }
+            });
+        }
     }
 }

@@ -58,12 +58,12 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:padding="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:layout_margin="5dp"
                     android:elevation="8dp"
                     style="@style/Widget.Material3.CardView.Elevated">
 
@@ -103,114 +103,89 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--dropdown list-->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dropdown_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Select a Language">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/dropdown_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:popupBackground="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="0.5"
-                        android:text="#CodeToImage"
-                        android:textColor="@color/white" />
+                        android:text="@string/font"
+                        android:textAlignment="center" />
 
-                    <TextView
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/textSizeSlider"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        android:text="Download -> Google Play Store"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/white" />
-
+                        android:valueFrom="0.0"
+                        android:valueTo="100.0"
+                        app:thumbHeight="15dp"
+                        app:thumbRadius="12dp"
+                        app:thumbWidth="15dp"
+                        app:trackHeight="8dp" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
 
         </LinearLayout>
 
-        <!--dropdown list-->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/dropdown_layout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Select a Language">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/dropdown_menu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:popupBackground="@color/white" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.5"
-                            android:text="@string/font"
-                            android:textAlignment="center" />
-
-                        <com.google.android.material.slider.Slider
-                            android:id="@+id/textSizeSlider"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:valueFrom="0.0"
-                            android:valueTo="100.0"
-                            app:thumbHeight="15dp"
-                            app:thumbRadius="12dp"
-                            app:thumbWidth="15dp"
-                            app:trackHeight="8dp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-
-        </ScrollView>
-
-
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -219,7 +194,6 @@
         android:background="@color/purple_500"
         android:orientation="vertical"
         android:padding="5dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -230,7 +204,7 @@
             android:background="@color/purple_500"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:weightSum="3"
+            android:weightSum="4"
             >
 
             <LinearLayout
@@ -255,6 +229,33 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5sp"
                     android:text="@string/clear_text"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/resetPattern"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/clear_all_24px"
+                    android:tint="@color/white"
+                    tools:ignore="SpeakableTextPresentCheck,UseAppTint" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:text="@string/reset_color_pattern"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12sp" />

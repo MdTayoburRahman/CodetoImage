@@ -1,7 +1,9 @@
 package com.mdtayoburrahman.codetoimage.Utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.amrdeveloper.codeview.CodeView;
 import com.mdtayoburrahman.codetoimage.R;
@@ -18,6 +20,7 @@ public class CodeViewSetupUtils {
     }
 
     /**Languages Setup methods*/
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupForJava(CodeView codeView){
         // Define syntax patterns for java
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -26,7 +29,7 @@ public class CodeViewSetupUtils {
                 "|import|package|interface|abstract|enum|synchronized|volatile|transient|native|instanceof|assert" +
                 "|const|goto)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\""), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -47,15 +50,17 @@ public class CodeViewSetupUtils {
                 "}");
 
     }
+    
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupForPython(CodeView codeView) {
         // Define syntax patterns for Python
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
         syntaxPatterns.put(Pattern.compile("\\b(def|class|if|elif|else|while|for|break|continue|return|try" +
                 "|except|finally|with|as|import|from|lambda|yield|global|nonlocal|assert|async|await|pass|raise" +
                 "|True|False|None)\\b"), mContext.getColor(R.color.orange)); // Keywords
-        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
-        syntaxPatterns.put(Pattern.compile("#.*"), Color.GRAY); // Comments
+        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), mContext.getColor(R.color.green)); // Strings
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
+        syntaxPatterns.put(Pattern.compile("#.*"), mContext.getColor(R.color.darkGrey)); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(True|False|None)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:]"), mContext.getColor(R.color.orange)); // Delimiters
         syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_]*)\\b"), mContext.getColor(R.color.white)); // Identifiers
@@ -71,6 +76,8 @@ public class CodeViewSetupUtils {
 
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupForJavaScript(CodeView codeView) {
         // Define syntax patterns for JavaScript
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -79,7 +86,7 @@ public class CodeViewSetupUtils {
                 "in|of|await|async|class|extends|import|export|default|" +
                 "true|false|null|undefined|NaN|Infinity)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'|`([^`])*`"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|null|undefined|NaN|Infinity)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -98,6 +105,8 @@ public class CodeViewSetupUtils {
                 "console.log(add(3, 4));");
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupCSharp(CodeView codeView) {
         // Define syntax patterns for C#
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -108,7 +117,7 @@ public class CodeViewSetupUtils {
                 "checked|unchecked|fixed|unsafe|extern|ref|out|sizeof|typeof|stackalloc|nameof|var|dynamic|" +
                 "yield|params|in|is|as)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\""), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -129,12 +138,14 @@ public class CodeViewSetupUtils {
                 "}");
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupForHtml(CodeView codeView) {
         // Define syntax patterns for HTML
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
         // HTML Tags
         syntaxPatterns.put(Pattern.compile("<!DOCTYPE>|<!DOCTYPE html>|</?\\w+\\b[^>]*>", Pattern.DOTALL),
-                mContext.getColor(R.color.ligh_blue));
+                mContext.getColor(R.color.orange));
         // Attribute values
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\""), Color.GREEN);
         // Comments
@@ -142,9 +153,9 @@ public class CodeViewSetupUtils {
         // Text inside tags (not ideal for nested or multiline tags)
         syntaxPatterns.put(Pattern.compile(">([^<]+)<", Pattern.DOTALL), Color.WHITE);
         // Attributes (e.g., class, id) before the '='
-        syntaxPatterns.put(Pattern.compile("\\b(class|id)\\b(?=\\s*=)"), mContext.getColor(R.color.orange));
+        syntaxPatterns.put(Pattern.compile("\\b(class|id)\\b(?=\\s*=)"), mContext.getColor(R.color.yellow));
         // Attribute values (e.g., class="value", id="value")
-        syntaxPatterns.put(Pattern.compile("\\b(class|id|style|type|placeholder|required|href)\\s*=\\s*\"[^\"]*\""), mContext.getColor(R.color.orange)); // Add a new color
+        syntaxPatterns.put(Pattern.compile("\\b(class|id|style|type|placeholder|required|href)\\s*=\\s*\"[^\"]*\""), mContext.getColor(R.color.yellow)); // Add a new color
         codeView.setSyntaxPatternsMap(syntaxPatterns);
 
 
@@ -162,6 +173,8 @@ public class CodeViewSetupUtils {
                 "</html>");
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupForRuby(CodeView codeView) {
         // Define syntax patterns for Ruby
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -169,7 +182,7 @@ public class CodeViewSetupUtils {
                 "|next|redo|retry|return|yield|super|self|nil|true|false|and|or|not|alias|begin|rescue|ensure|" +
                 "end|case|when|then|in|unless|BEGIN|END|__FILE__|__LINE__)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("#.*"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|nil)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -194,17 +207,17 @@ public class CodeViewSetupUtils {
                 "hello.say_hello");
 
     }
-    public void codeViewSetupSwift(CodeView codeView) {
 
+    @SuppressLint("SetTextI18n")
+    public void codeViewSetupSwift(CodeView codeView) {
         // Define syntax patterns for Swift
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
-        syntaxPatterns.put(Pattern.compile("\\b(class|struct|enum|protocol|extension|func|let|var|if|else|for" +
-                "|while|do|switch|case|default|break|continue|return|try|catch|throw|throws|defer|guard|repeat|self" +
-                "|super|nil|true|false|import|init|deinit|typealias|associatedtype|inout|static|subscript|where|as|" +
-                "is|in|out|do|rethrows|await|async|some|any)\\b"), mContext.getColor(R.color.orange)); // Keywords
-        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
-        syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
+        syntaxPatterns.put(Pattern.compile("\\b(def|class|module|if|elsif|else|unless|while|until|for|do|break" +
+                "|next|redo|retry|return|yield|super|self|nil|true|false|and|or|not|alias|begin|rescue|ensure|" +
+                "end|case|when|then|in|unless|BEGIN|END|__FILE__|__LINE__)\\b"), mContext.getColor(R.color.orange)); // Keywords
+        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), mContext.getColor(R.color.green)); // Strings
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
+        syntaxPatterns.put(Pattern.compile("#.*"), mContext.getColor(R.color.darkGrey)); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|nil)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
         syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_]*)\\b"), mContext.getColor(R.color.white)); // Identifiers
@@ -230,23 +243,61 @@ public class CodeViewSetupUtils {
                 "hello.sayHello()");
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupPHP(CodeView codeView) {
         // Define syntax patterns for PHP
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
-        syntaxPatterns.put(Pattern.compile("\\b(abstract|and|array|as|break|case|catch|class|clone|const" +
-                "|continue|declare|default|do|else|elseif|enddeclare|endfor|endforeach|endif|endswitch|endwhile|" +
-                "extends|final|finally|for|foreach|function|global|goto|if|implements|include|include_once|" +
-                "instanceof|insteadof|interface|namespace|new|or|print|private|protected|public|require|" +
-                "require_once|return|static|switch|throw|trait|try|use|var|while|xor|yield)\\b"), mContext.getColor(R.color.orange)); // Keywords
-        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.ligh_blue)); // Numbers
-        syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/|#.*"), Color.GRAY); // Comments
-        syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"), Color.parseColor("#FF4500")); // Constants
-        syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
-        syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_]*)\\b"), mContext.getColor(R.color.white)); // Identifiers
-        syntaxPatterns.put(Pattern.compile("[-+*/=<>!&|~^%]+"), Color.parseColor("#FF8C00")); // Operators
+
+        // Keywords
+        syntaxPatterns.put(Pattern.compile("<?php|\\b(abstract|this|and|array|as|break|case|catch|class|clone|const" +
+                        "|continue|declare|default|do|else|elseif|enddeclare|endfor|endforeach|endif|endswitch|endwhile|" +
+                        "extends|final|finally|for|foreach|function|global|goto|if|implements|include|include_once|" +
+                        "instanceof|insteadof|interface|namespace|new|or|print|private|protected|public|require|" +
+                        "require_once|return|static|switch|throw|trait|try|use|var|while|xor|yield)\\b"),
+                mContext.getColor(R.color.light_blue));
+
+
+        //comment
+        syntaxPatterns.put(Pattern.compile("(?:\\\\/\\\\*(?:[^*]|(?:\\\\*+[^*/]))*\\\\*\\\\/)|(?:\\\\/\\\\/[^\\\\n]*)|(?:#[^\\\\n]*)")
+                ,mContext.getColor(R.color.gray));
+
+        // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"),
+                mContext.getColor(R.color.light_blue));
+
+        // Comments
+        syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)*?)\\*/|#.*"),
+                mContext.getColor(R.color.gray));
+
+        // Constants
+        syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"),
+                mContext.getColor(R.color.blue));
+
+        // Delimiters and special characters
+        syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;?]"),
+                mContext.getColor(R.color.blue));
+
+        // Identifiers
+        syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_]*)\\b"),
+                mContext.getColor(R.color.white));
+
+        // Operators
+        syntaxPatterns.put(Pattern.compile("[-+*/=<>!&|~^%]+"),
+                mContext.getColor(R.color.yellow));
+
+        // Dollar sign for variables
+        syntaxPatterns.put(Pattern.compile("\\$"),
+                mContext.getColor(R.color.blue));
+
+        // Methods
+        syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()"),
+                mContext.getColor(R.color.yellow));  // Assuming methods should be yellow
+
 
         codeView.setSyntaxPatternsMap(syntaxPatterns);
+
+
         // Set some initial code
         codeView.setText("<?php\n" +
                 "// This is a comment\n" +
@@ -262,8 +313,11 @@ public class CodeViewSetupUtils {
                 "$hello = new HelloWorld('World');\n" +
                 "$hello->sayHello();\n" +
                 "?>");
-
     }
+
+
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupSQL(CodeView codeView) {
         // Define syntax patterns for PHP
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -271,13 +325,13 @@ public class CodeViewSetupUtils {
         syntaxPatterns.put(Pattern.compile("\\b(SELECT|FROM|WHERE|JOIN|ON|GROUP BY|ORDER BY|INSERT INTO|" +
                 "VALUES|UPDATE|SET|DELETE|CREATE TABLE|ALTER TABLE|DROP TABLE|INNER JOIN|LEFT JOIN|RIGHT JOIN|" +
                 "FULL JOIN|AND|OR|NOT|IS NULL|IS NOT NULL|LIKE|IN|BETWEEN|EXISTS|DISTINCT|AS|UNION|ALL|ANY|CASE" +
-                "|WHEN|THEN|ELSE|END)\\b", Pattern.CASE_INSENSITIVE), mContext.getColor(R.color.ligh_blue)); // Keywords
+                "|WHEN|THEN|ELSE|END)\\b", Pattern.CASE_INSENSITIVE), mContext.getColor(R.color.light_blue)); // Keywords
 
         // SQL Strings
         syntaxPatterns.put(Pattern.compile("'(\\\\.|[^'])*'", Pattern.DOTALL), Color.GREEN); // Strings
 
         // SQL Numbers
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
 
         // SQL Comments
         syntaxPatterns.put(Pattern.compile("--.*?$", Pattern.MULTILINE), Color.GRAY); // Single-line comments
@@ -314,6 +368,8 @@ public class CodeViewSetupUtils {
 
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupKotlin(CodeView codeView) {
         // Define syntax patterns for Kotlin
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -325,7 +381,7 @@ public class CodeViewSetupUtils {
                 "data|enum|annotation|crossinline|noinline|reified|suspend|constructor|delegated|internal|" +
                 "open|infix|inline|tailrec|external|annotation)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -352,6 +408,8 @@ public class CodeViewSetupUtils {
 
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupGo(CodeView codeView) {
         // Define syntax patterns for Go
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -359,7 +417,7 @@ public class CodeViewSetupUtils {
                 "for|range|return|go|defer|break|continue|goto|switch|case|default|select|fallthrough|chan|map|" +
                 "true|false|nil|iota)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|nil)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -391,6 +449,8 @@ public class CodeViewSetupUtils {
 
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupRust(CodeView codeView) {
         // Define syntax patterns for Rust
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -399,7 +459,7 @@ public class CodeViewSetupUtils {
                 "super|trait|true|type|union|unsafe|use|where|while|yield|continue|break|else|for|if|" +
                 "match|return|while|loop|Self)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), Color.BLUE); // Numbers
+        syntaxPatterns.put(Pattern.compile("\\b\\d+\\b"), mContext.getColor(R.color.light_blue)); // Numbers
         syntaxPatterns.put(Pattern.compile("//.*|/\\*((.|\\n)(?!=*/))+\\*/"), Color.GRAY); // Comments
         syntaxPatterns.put(Pattern.compile("\\b(true|false|None|Some|Ok|Err)\\b"), Color.parseColor("#FF4500")); // Constants
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
@@ -429,6 +489,8 @@ public class CodeViewSetupUtils {
 
 
     }
+
+    @SuppressLint("SetTextI18n")
     public void codeViewSetupCSS(CodeView codeView) {
         // Define syntax patterns for CSS
         HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
@@ -461,9 +523,9 @@ public class CodeViewSetupUtils {
                 "max-height|max-width|@media|min-height|min-width|mix-blend-mode|object-fit|object-position|" +
                 "opacity|order|orphans|outline|outline-color|outline-offset|outline-style|outline-width|overflow|overflow-wrap|overflow-x|overflow-y|padding|padding-bottom|padding-left|padding-right|padding-top|page-break-after|page-break-before|page-break-inside|perspective|perspective-origin|pointer-events|position|quotes|resize|right|scroll-behavior|table-layout|tab-size|text-align|text-align-last|text-combine-upright|text-decoration|text-decoration-color|text-decoration-line|text-decoration-style|text-indent|text-justify|text-orientation|text-overflow|text-shadow|text-transform|text-underline-position|top|transform|transform-origin|transform-style|transition|transition-delay|transition-duration|transition-property|transition-timing-function|unicode-bidi|user-select|vertical-align|visibility|white-space|widows|width|word-break|word-spacing|word-wrap|writing-mode|z-index|@keyframes|@supports|@namespace|@document|@page|@viewport|@counter-style|@font-feature-values|@property)\\b"), mContext.getColor(R.color.orange)); // Keywords
         syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\"|'(\\\\.|[^'])*'"), Color.GREEN); // Strings
-        syntaxPatterns.put(Pattern.compile("#[A-Fa-f0-9]{6}\\b|#[A-Fa-f0-9]{3}\\b"), Color.BLUE); // Hex Colors
+        syntaxPatterns.put(Pattern.compile("#[A-Fa-f0-9]{6}\\b|#[A-Fa-f0-9]{3}\\b"), mContext.getColor(R.color.light_blue)); // Hex Colors
         syntaxPatterns.put(Pattern.compile("/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/"), Color.GRAY); // Comments
-        syntaxPatterns.put(Pattern.compile("\\b[0-9]+(px|em|rem|%)?\\b"), Color.BLUE); // Numbers with units
+        syntaxPatterns.put(Pattern.compile("\\b[0-9]+(px|em|rem|%)?\\b"), mContext.getColor(R.color.light_blue)); // Numbers with units
         syntaxPatterns.put(Pattern.compile("[{}()\\[\\].,:;]"), mContext.getColor(R.color.orange)); // Delimiters
         syntaxPatterns.put(Pattern.compile("\\b([A-Za-z_][A-Za-z0-9_-]*)\\b"), mContext.getColor(R.color.white)); // Identifiers
         syntaxPatterns.put(Pattern.compile("[-+*/=<>!&|~^%]+"), Color.parseColor("#FF8C00")); // Operators
@@ -500,4 +562,137 @@ public class CodeViewSetupUtils {
                 "}");
 
     }
+
+    @SuppressLint("SetTextI18n")
+    public void codeViewSetupJSON(CodeView codeView) {
+        // Define syntax patterns for JSON
+        HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
+        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\""), Color.GREEN); // Strings
+        syntaxPatterns.put(Pattern.compile("\\b(true|false|null)\\b"), mContext.getColor(R.color.light_blue)); // Keywords
+        syntaxPatterns.put(Pattern.compile("-?\\b\\d+(\\.\\d+)?([eE][-+]?\\d+)?\\b"), Color.MAGENTA); // Numbers
+        syntaxPatterns.put(Pattern.compile("[{}\\[\\]:,]"), mContext.getColor(R.color.orange)); // Delimiters
+        syntaxPatterns.put(Pattern.compile("//.*|/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/"), Color.GRAY); // Comments
+
+        codeView.setSyntaxPatternsMap(syntaxPatterns);
+
+        // Set some initial code
+        codeView.setText("{\n" +
+                "    \"name\": \"John\",\n" +
+                "    \"age\": 30,\n" +
+                "    \"isStudent\": false,\n" +
+                "    \"courses\": [\n" +
+                "        \"Math\",\n" +
+                "        \"Science\"\n" +
+                "    ],\n" +
+                "    \"address\": {\n" +
+                "        \"street\": \"123 Main St\",\n" +
+                "        \"city\": \"Anytown\"\n" +
+                "    }\n" +
+                "}");
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void codeViewSetupXML(CodeView codeView) {
+        // Define syntax patterns for XML
+        /*HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
+        syntaxPatterns.put(Pattern.compile("<(/)?(\\b|\\?|!)[^>]*>?"), mContext.getColor(R.color.orange)); // Tags
+        syntaxPatterns.put(Pattern.compile("\"(\\\\.|[^\"])*\""), Color.GREEN); // Strings (attribute values)        syntaxPatterns.put(Pattern.compile("\\b\\w+\\b(?=\\s*=)"), mContext.getColor(R.color.light_blue)); // Attributes
+        syntaxPatterns.put(Pattern.compile("<!--[^-]*-->", Pattern.DOTALL), Color.GRAY); // Comments
+        syntaxPatterns.put(Pattern.compile("<\\?xml[^>]*\\?>"), mContext.getColor(R.color.orange)); // XML Declaration
+        syntaxPatterns.put(Pattern.compile("<!DOCTYPE[^>]*>"), mContext.getColor(R.color.orange)); // DOCTYPE
+        syntaxPatterns.put(Pattern.compile(">([^<]+)<"), mContext.getColor(R.color.white)); // Text content
+*/
+          final Pattern XML_TAG_PATTERN = Pattern.compile("<(/)?(\\b|\\?|!)[^>]*>?");
+          final Pattern XML_ATTRIBUTE_VALUE_PATTERN = Pattern.compile("\"(\\\\.|[^\"])*\"");
+
+        if (mContext == null) {
+            return; // Or handle the null case appropriately
+        }
+
+        // Define syntax patterns for XML using color codes
+        HashMap<Pattern, Integer> xmlSyntaxPatterns = new HashMap<>();
+        xmlSyntaxPatterns.put(XML_TAG_PATTERN, 0xFFFF8C00); // Tags (Orange)
+        xmlSyntaxPatterns.put(XML_ATTRIBUTE_VALUE_PATTERN, 0xFF008000); // Strings (Green)
+        xmlSyntaxPatterns.put(Pattern.compile("\\b\\w+\\b(?=\\s*=)"), 0xFFADD8E6); // Attributes (Light Blue)
+        xmlSyntaxPatterns.put(Pattern.compile("<!--[^-]*-->", Pattern.DOTALL), 0xFF808080); // Comments (Gray)
+        xmlSyntaxPatterns.put(Pattern.compile("<\\?xml[^>]*\\?>"), 0xFFFF8C00); // XML Declaration (Orange)
+        xmlSyntaxPatterns.put(Pattern.compile("<!DOCTYPE[^>]*>"), 0xFFFF8C00); // DOCTYPE (Orange)
+        xmlSyntaxPatterns.put(Pattern.compile(">([^<]+)<"), 0xFFFFFFFF); // Text content (White)
+        codeView.setSyntaxPatternsMap(xmlSyntaxPatterns);
+
+        // Set some initial code
+        codeView.setText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<note>\n" +
+                "    <to>Tove</to>\n" +
+                "    <from>Jani</from>\n" +
+                "    <heading>Reminder</heading>\n" +
+                "    <body>Don't forget me this weekend!</body>\n" +
+                "</note>\n" +
+                "<!-- This is a comment -->\n"
+        );
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void codeViewSetupYAML(CodeView codeView) {
+        // Define syntax patterns for YAML with improved coloring
+        HashMap<Pattern, Integer> syntaxPatterns = new HashMap<>();
+
+        // Comments (gray)
+        syntaxPatterns.put(Pattern.compile("^(\\s*#.*)$"), Color.GRAY);
+
+        // Keys (orange)
+        syntaxPatterns.put(Pattern.compile("([a-zA-Z0-9_-]+\\s*:)"), mContext.getColor(R.color.orange));
+
+        // Values (including strings and booleans) - Different color for strings
+        syntaxPatterns.put(Pattern.compile("(?<![:\"])(?:(\\w+)|('.*?')|\".*?\")"),  // Match double-quoted strings (different color)
+                mContext.getColor(R.color.light_blue)); // Replace with desired color
+
+        // Keywords (light blue)
+        syntaxPatterns.put(Pattern.compile("\\b(true|false|null|~)\\b"), mContext.getColor(R.color.yellow));
+
+        // Numbers (magenta)
+        syntaxPatterns.put(Pattern.compile("\\b(0[xX]?[0-9a-fA-F]+|[0-9]+(?:\\.[0-9]*)?)\\b"), mContext.getColor(R.color.purple));
+
+        // Braces and brackets (green) - Adjust color as needed
+        syntaxPatterns.put(Pattern.compile("[\\p{Ps}\\p{Pe}]"), mContext.getColor(R.color.green));
+
+
+
+        // Commas (blue) - Adjust color as needed
+        syntaxPatterns.put(Pattern.compile(","), mContext.getColor(R.color.light_blue));
+
+        codeView.setSyntaxPatternsMap(syntaxPatterns);
+
+        // Set some initial code
+        codeView.setText("version: '3.7'\n" +
+                "services:\n" +
+                "  web:\n" +
+                "    image: nginx:alpine\n" +
+                "    ports:\n" +
+                "      - \"80:80\"\n" +
+                "  database:\n" +
+                "    image: postgres:latest\n" +
+                "    environment:\n" +
+                "      POSTGRES_USER: user\n" +
+                "      POSTGRES_PASSWORD: password\n" +
+                "    volumes:\n" +
+                "      - db_data:/var/lib/postgresql/data\n" +
+                "volumes:\n" +
+                "  db_data: {}\n" +
+                "# This is a comment in YAML\n" +
+                "apiVersion: v1\n" +
+                "kind: Pod\n" +
+                "metadata:\n" +
+                "  name: mypod\n" +
+                "spec:\n" +
+                "  containers:\n" +
+                "  - name: mycontainer\n" +
+                "    image: busybox\n" +
+                "    command: ['sh', '-c', 'echo Hello, Kubernetes! && sleep 3600']\n");
+
+    }
+
+
+
+
 }

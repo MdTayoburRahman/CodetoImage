@@ -20,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import static com.mdtayoburrahman.codetoimage.Utils.AppUtils.showNegativeSnackBar;
 
 public class ImageShareUtils {
 
@@ -51,10 +50,9 @@ public class ImageShareUtils {
         return returnedBitmap;
     }
 
-
-    public void shareImageBitmap(Bitmap bitmap) {
+    public void shareImageFromBitmap(Bitmap bitmap) {
         if (bitmap == null){
-            Log.d(TAG, "shareImageBitmap: ");
+            Log.d(TAG, "shareImageFromBitmap: ");
             return;
         }
         executor.execute(() -> {
@@ -80,13 +78,29 @@ public class ImageShareUtils {
                 context.startActivity(Intent.createChooser(shareIntent, "Share Image"));
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d(TAG, "shareImageBitmap: "+e.getMessage());
+                Log.d(TAG, "shareImageFromBitmap: "+e.getMessage());
                 // Handle exception on the main thread
                 ((Activity) context).runOnUiThread(() -> {
                     AppUtils.showNegativeSnackBar((Activity) context, "Failed to Share image");
                 });
             }
         });
+    }
+
+    public void shareImageFromPath(String path) {
+        File imgFile = new File(path);
+        if (imgFile.exists()) {
+            Uri imageUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", imgFile);
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/*");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            context.startActivity(Intent.createChooser(shareIntent, "Share Image"));
+        }
+
+
     }
 
 }

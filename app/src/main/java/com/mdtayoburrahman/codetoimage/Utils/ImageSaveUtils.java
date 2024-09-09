@@ -95,13 +95,37 @@ public class ImageSaveUtils {
         });
     }
 
-
-
     public void requestWritePermission(Activity activity, PermissionCallback callback) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             // For Android 9 (Pie) and below, request WRITE_EXTERNAL_STORAGE permission
             PermissionX.init((FragmentActivity) activity)
                     .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .onExplainRequestReason((scope, deniedList) -> {
+                        String message = "Permission to access your storage is required to save images.";
+                        scope.showRequestReasonDialog(deniedList, message, "OK", "Cancel");
+                    })
+                    .onForwardToSettings((scope, deniedList) -> {
+                        String message = "You need to allow necessary permissions in Settings manually";
+                        scope.showForwardToSettingsDialog(deniedList, message, "OK", "Cancel");
+                    })
+                    .request((allGranted, grantedList, deniedList) -> {
+                        if (allGranted) {
+                            callback.onPermissionGranted();
+                        } else {
+                            callback.onPermissionDenied();
+                        }
+                    });
+        } else {
+            // For Android 10 and above, no need to request WRITE_EXTERNAL_STORAGE
+            callback.onPermissionGranted();
+        }
+    }
+
+    public void requestReadPermission(Activity activity, PermissionCallback callback) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            // For Android 9 (Pie) and below, request WRITE_EXTERNAL_STORAGE permission
+            PermissionX.init((FragmentActivity) activity)
+                    .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
                     .onExplainRequestReason((scope, deniedList) -> {
                         String message = "Permission to access your storage is required to save images.";
                         scope.showRequestReasonDialog(deniedList, message, "OK", "Cancel");
