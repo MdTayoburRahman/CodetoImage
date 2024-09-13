@@ -474,8 +474,8 @@ public class MainActivity extends BaseActivity {
         View view = layoutInflater.inflate(R.layout.about_app_layout, null);
         TextView appVersionText = view.findViewById(R.id.app_version);
 
-        Button button = view.findViewById(R.id.closeBTN);
-        Button emailButton = view.findViewById(R.id.sendEmailBTN);
+        Button btn_close = view.findViewById(R.id.closeBTN);
+        Button btn_email = view.findViewById(R.id.sendEmailBTN);
 
 
         try {
@@ -483,14 +483,15 @@ public class MainActivity extends BaseActivity {
             pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             String version = pInfo.versionName;
             int year = Calendar.getInstance().get(Calendar.YEAR);
-            String copyright = year + " ©Md Tayobur Rahman - All rights reserved";
-            String website = "\n http://mdtayoburrahman.com \n tayoburrahman119@gmail.com";
-            appVersionText.setText(copyright + website + "\n\n App Version - " + version);
+            String copyright ="©"+ year + " - All rights reserved\n";
+            String dev = "Developed by MD Tayobur Rahman";
+          //  String website = "\n https://mdtayoburrahman.com \n tayoburrahman119@gmail.com";
+            appVersionText.setText(copyright +dev+ "\n\n App Version - " + version);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        emailButton.setOnClickListener(v -> {
+        btn_email.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                     "mailto", "tayoburrahman119@gmail.com", null));
             intent.putExtra(Intent.EXTRA_SUBJECT, "Regarding Code To Image App -");
@@ -498,16 +499,15 @@ public class MainActivity extends BaseActivity {
         });
 
 
-        button.setOnClickListener(view1 -> {
-            if (alertDialog != null) {
-                alertDialog.dismiss();
-            }
+        btn_close.setOnClickListener(view1 -> {
+            AppUtils.SendUrlToBrowser("https://mdtayoburrahman.com", MainActivity.this);
         });
 
 
         builder.setView(view);
         builder.setCancelable(true);
         alertDialog = builder.create();
+        alertDialog.setCancelable(true);
         alertDialog.show();
 
     }
